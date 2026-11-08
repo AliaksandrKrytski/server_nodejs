@@ -51,6 +51,6 @@ app.get("/products/cheap", (req,res) => {
 
 export default app;
 
-app.listen(3000, () => {
-    console.log("Сервер запущен: http://localhost:3000");
-});
+// app.listen(3000, () => {
+//     console.log("Сервер запущен: http://localhost:3000");
+// });
