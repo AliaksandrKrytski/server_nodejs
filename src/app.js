@@ -1,5 +1,5 @@
 const { engine } = require("express-handlebars");
-const experss = require('express');
+const express = require('express');
 const path = require("path");
 const session = require('express-session');
 
@@ -52,6 +52,8 @@ app.get("/products/cheap", (req,res) => {
         products:cheapProducts
     });
 });
+
+module.exports = app;
 
 //export default app;
 
