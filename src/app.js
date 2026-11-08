@@ -45,6 +45,12 @@ app.get("/login", (req,res) => {
     });
 });
 
+app.get("/products", (req,res) => {
+    res.render("products", {
+        title: "Товары"
+    });
+});
+
 app.get("/products/cheap", (req,res) => {
     const cheapProducts = products.filter(product => product.price < 3000);
     res.render("product", {
