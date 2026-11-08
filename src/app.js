@@ -21,8 +21,12 @@ app.use(
 );
 
 app.get("/", (req,res) => {
+    if(!req.session.user){
+        return res.redirect('/login');
+    }
     res.render("home", {
-        title: "Главная страница"
+        title: "Главная страница",
+        user: req.session.user
     });
 });
 
@@ -41,7 +45,38 @@ app.get("/register", (req,res) => {
 
 app.get("/login", (req,res) => {
     res.render("login", {
-        title: "Вход в аккаунт"
+        title: "Вход в аккаунт",
+        error: null
+    });
+});
+
+app.post('/login', (req, res) => {
+    const { email, password } = req.body;
+
+    const user = users.find(
+        (item) =>
+            item.email.toLowerCase() === email.toLowerCase() &&
+            item.password === password
+    );
+
+    if (!user) {
+        return res.render('login', {
+            title: 'Вход',
+            error: 'Неверный email или пароль.',
+        });
+    }
+
+    req.session.user = {
+        username: user.username,
+        email: user.email,
+    };
+
+    res.redirect('/');
+});
+
+app.post('/logout', (req, res) => {
+    req.session.destroy(() => {
+        res.redirect('/login');
     });
 });
 

@@ -1,6 +1,10 @@
 <section>
     <h2>Войдите в свой аккаунт</h2>
 
+    {{#if error}}
+     <p class="error">{{error}}</p>
+    {{/if}}
+    
     <p>Логин</p>
     <input type="email">
 
