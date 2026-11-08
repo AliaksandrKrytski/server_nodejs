@@ -1,20 +1,24 @@
 const { engine } = require("express-handlebars");
+const experss = require('express');
 const path = require("path");
+const session = require('express-session');
 
 const app = express();
 
-app.engine("handlebars", engine());
+app.engine("handlebars", engine({extname: '.handlebars', defaultLayout: 'main', layoutsDir: path.join(__dirname, 'views', 'layouts'), partialsDir: path.join(__dirname, 'views', 'partials')}));
 
 app.set("view engine", "handlebars");
+app.set("views", path.join(__dirname, "views"));
+app.use(express.urlencoded({extended: true}));
+app.use(express.static(path.join(__dirname, "../public")));
 
-app.set(
-    "views",
-    path.join(__dirname, "views")
+app.use(
+    session({
+        secret: process.env.SESSION_SECRET || 'secret',
+        resave: false,
+        saveUninitialized: false
+    })
 );
-
-app.use(express.static(
-    path.join(__dirname, "../public")
-));
 
 app.get("/", (req,res) => {
     res.render("home", {
@@ -49,7 +53,7 @@ app.get("/products/cheap", (req,res) => {
     });
 });
 
-export default app;
+//export default app;
 
 // app.listen(3000, () => {
 //     console.log("Сервер запущен: http://localhost:3000");
