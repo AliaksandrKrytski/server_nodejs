@@ -1,18 +1,19 @@
-<h2>Католог товаров</h2>
+<h2>Каталог товаров</h2>
 
 <div class="products">
-    {{#each products}}
-        <article class="product">
-            <h3>{{name}}</h3>
-            <p>Цена: {{price}} руб.</p>
-            <p>Категория: {{category}}</p>
-            <p>{{description}}</p>
-            <a href="/products/{{id}}">
-                Подробнее
-            </a>
-        </article>
-        {{#if isAvaulable}}
-        {{else}}
-            <p>Товары пока отсутвуют</p>
-    {{/each}}
+    {{#if products.length}}
+        {{#each products}}
+            <article class="product">
+                <h3>{{name}}</h3>
+                <p>Цена: {{price}} руб.</p>
+                <p>Категория: {{category}}</p>
+                <p>{{description}}</p>
+                <a href="/products/{{id}}">
+                    Подробнее
+                </a>
+            </article>
+        {{/each}}
+    {{else}}
+        <p>Товары пока отсутствуют</p>
+    {{/if}}
 </div>

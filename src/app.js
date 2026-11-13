@@ -6,11 +6,19 @@ const session = require('express-session');
 const app = express();
 
 const products = [
-    {id: 1, name: "Ноутбук", price: 2500, category: "Переферия", description: "Удобная клавиатура"},
-    {id: 1, name: "Мышка", price: 500, category: "Переферия", description: "Тихая"}
+    {id: 1, name: "Ноутбук", price: 6000, category: "Техника", description: "Удобная клавиатура"},
+    {id: 2, name: "Мышка", price: 500, category: "Переферия", description: "Тихая"},
+    {id: 3, name: "Коврик для мыши", price: 200, category: "Переферия", description: "Не скользит"}
 ];
 
-const users = [];
+const users = 
+[
+    {
+      username: 'sygov_am75',
+      email: 'asdasd@gmail.com',
+      password: 'asd'
+    }
+];
 
 app.engine("handlebars", engine({extname: '.handlebars', defaultLayout: 'main', layoutsDir: path.join(__dirname, 'views', 'layouts'), partialsDir: path.join(__dirname, 'views', 'partials')}));
 
