@@ -5,6 +5,13 @@ const session = require('express-session');
 
 const app = express();
 
+const products = [
+    {id: 1, name: "Ноутбук", price: 2500, category: "Переферия", description: "Удобная клавиатура"},
+    {id: 1, name: "Мышка", price: 500, category: "Переферия", description: "Тихая"}
+];
+
+const users = [];
+
 app.engine("handlebars", engine({extname: '.handlebars', defaultLayout: 'main', layoutsDir: path.join(__dirname, 'views', 'layouts'), partialsDir: path.join(__dirname, 'views', 'partials')}));
 
 app.set("view engine", "handlebars");
@@ -37,11 +44,49 @@ app.get("/about", (req,res) => {
     });
 });
 
-app.get("/register", (req,res) => {
-    res.render("register", {
-        title: "Регистрация"
+app.get('/register', (req, res) => {
+    res.render('register', {
+      title: 'Регистрация',
+      error: null,
     });
-});
+  });
+  
+  app.post('/register', (req, res) => {
+    const { username, email, password, passConf } = req.body;
+  
+    if (!username || !email || !password || !passConf) {
+      return res.render('register', {
+        title: 'Регистрация',
+        error: 'Заполните все поля.',
+      });
+    }
+  
+    if (password !== passConf) {
+      return res.render('register', {
+        title: 'Регистрация',
+        error: 'Пароли не совпадают.',
+      });
+    }
+  
+    const userExists = users.some(
+      (user) => user.email.toLowerCase() === email.toLowerCase()
+    );
+  
+    if (userExists) {
+      return res.render('register', {
+        title: 'Регистрация',
+        error: 'Пользователь с таким email уже существует.',
+      });
+    }
+  
+    users.push({
+      username,
+      email: email.toLowerCase(),
+      password,
+    });
+  
+    res.redirect('/login');
+  });
 
 app.get("/login", (req,res) => {
     res.render("login", {
@@ -82,13 +127,14 @@ app.post('/logout', (req, res) => {
 
 app.get("/products", (req,res) => {
     res.render("products", {
-        title: "Товары"
+        title: "Товары",
+        products: products
     });
 });
 
 app.get("/products/cheap", (req,res) => {
     const cheapProducts = products.filter(product => product.price < 3000);
-    res.render("product", {
+    res.render("products", {
         title: "недорогие товары",
         products:cheapProducts
     });
