@@ -1,17 +1,19 @@
-
 <section>
     <h2>Создайте свой аккаунт</h2>
 
-    <p>Имя</p>
-    <input type="text">
-
-    <p>Логин</p>
-    <input type="email">
-
-    <p>Пароль</p>
-    <input type="text">
-    <p>Повторите пароль</p>
-    <input type="text">
-    <a href="/login">войти</a>
-    <button сlass="registrBtn">ЗАРЕГИСТРИРОВАТСЯ</button>
+    {{#if error}}
+        <p style="color: red;">{{error}}</p>
+    {{/if}}
+    <form action="/register" method="POST">
+        <p>Имя</p>
+        <input type="text" name="username" required>
+        <p>Логин (Email)</p>
+        <input type="email" name="email" required>
+        <p>Пароль</p>
+        <input type="password" name="password" required>
+        <p>Повторите пароль</p>
+        <input type="password" name="passConf" required>
+        <a href="/login">Войти</a>
+        <button type="submit" class="registrBtn">ЗАРЕГИСТРИРОВАТЬСЯ</button>
+    </form>
 </section>

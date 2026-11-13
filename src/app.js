@@ -84,7 +84,7 @@ app.get('/register', (req, res) => {
       email: email.toLowerCase(),
       password,
     });
-  
+    console.log(users);
     res.redirect('/login');
   });
 
@@ -116,7 +116,7 @@ app.post('/login', (req, res) => {
         email: user.email,
     };
 
-    res.redirect('/');
+    res.redirect('/home');
 });
 
 app.post('/logout', (req, res) => {
@@ -129,6 +129,16 @@ app.get("/products", (req,res) => {
     res.render("products", {
         title: "Товары",
         products: products
+    });
+});
+
+app.get("/home", (req,res) => {
+    if(!req.session.user){
+        return res.redirect('/login');
+    }
+    res.render("home", {
+        title: "Главная страница",
+        user: req.session.user
     });
 });
 

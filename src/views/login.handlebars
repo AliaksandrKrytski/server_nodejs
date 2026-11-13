@@ -2,15 +2,14 @@
     <h2>Войдите в свой аккаунт</h2>
 
     {{#if error}}
-     <p class="error">{{error}}</p>
+        <p style="color: red;">{{error}}</p>
     {{/if}}
-    
-    <p>Логин</p>
-    <input type="email">
-
-    <p>Пароль</p>
-    <input type="text">
-    <a href="/register">
-        Зарегистрироватся
-    </a>
+    <form action="/login" method="POST">
+        <p>Логин (Email)</p>
+        <input type="email" name="email" required>
+        <p>Пароль</p>
+        <input type="password" name="password" required>
+        <a href="/register">Зарегестрироватся</a>
+        <button type="submit" class="registrBtn">Войти</button>
+    </form>
 </section>
